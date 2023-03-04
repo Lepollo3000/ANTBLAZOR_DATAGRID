@@ -18,10 +18,11 @@ namespace ANTBLAZOR_DATAGRID.Client.Pages
         public HttpClient _client { get; set; }
         private readonly JsonSerializerOptions _options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
 
+        Func<PaginationTotalContext, string> _showTotal = ctx => $"Desde {ctx.Range.from} hasta {ctx.Range.to}. Total: {ctx.Total} productos.";
         private readonly int[] _pageSizeOptions = new int[] { 5, 10, 15, 20 };
-        private readonly int _defaultPageSizeOption = 5;
 
-        private bool _loading = false;
+        private bool _showLoading = false;
+        private int _pageSize = 5;
         private int _total = 0;
 
         private ProductParameters productParameters = new ProductParameters();
@@ -34,10 +35,8 @@ namespace ANTBLAZOR_DATAGRID.Client.Pages
 
         async Task HandleTableChange(QueryModel<Product> queryModel)
         {
-            _loading = true;
+            _showLoading = true;
 
-            //ApiResponse? data = await Http.GetFromJsonAsync<ApiResponse>("https://randomuser.me/api?" + GetRandomuserParams(queryModel));
-            //PagingResponse<Product>? data = await _client.GetFromJsonAsync<PagingResponse<Product>>(GetRandomuserParams(queryModel));
             PagingResponse<Product> data = new PagingResponse<Product>();
 
             using (var response = await _client.GetAsync(GetRandomuserParams(queryModel)))
@@ -69,25 +68,13 @@ namespace ANTBLAZOR_DATAGRID.Client.Pages
                 }
             }
 
-            _loading = false;
+            _showLoading = false;
             _data = data!.Items;
-            //_currentPage = data!.MetaData.CurrentPage;
             _total = data!.MetaData.TotalCount;
-
-            /*foreach (var persona in data.Results)
-			{
-				Console.WriteLine(@$"Name: {persona.Name.First} {persona.Name.Last}, Gender: {persona.Gender}, Email: {persona.Email}");
-			}*/
         }
 
         string GetRandomuserParams(QueryModel<Product> queryModel)
         {
-            /*List<string> query = new List<string>()
-			{
-				$"results={queryModel.PageSize}",
-				$"page={queryModel.PageIndex}"
-			};*/
-
             var queryStringParam = new Dictionary<string, string>
             {
                 ["pageNumber"] = queryModel.PageIndex.ToString(),
@@ -113,10 +100,10 @@ namespace ANTBLAZOR_DATAGRID.Client.Pages
 				});
 			});*/
 
-            string kk = QueryHelpers.AddQueryString("api/employee", queryStringParam);
+            string apiQuery = QueryHelpers.AddQueryString("api/employee", queryStringParam);
 
             //return string.Join('&', query);
-            return kk;
+            return apiQuery;
         }
     }
 }
