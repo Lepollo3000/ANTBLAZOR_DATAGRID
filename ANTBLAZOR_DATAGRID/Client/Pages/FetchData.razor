@@ -9,12 +9,12 @@
     </TitleTemplate>
     <ColumnDefinitions>
         <PropertyColumn Property="c => c!.Id" DefaultSortOrder="SortDirection.Ascending" Sortable></PropertyColumn>
-        <PropertyColumn Property="c => c!.Name"></PropertyColumn>
+        <PropertyColumn Property="c => c!.Name" Sortable></PropertyColumn>
         <PropertyColumn Property="c => c!.Price"></PropertyColumn>
         <PropertyColumn Property="c => c!.ManufactureDate" Format="dddd, dd MMMM yyyy"></PropertyColumn>
     </ColumnDefinitions>
     <PaginationTemplate>
-        <Pagination Class="mt-3" Total="context.Total" PageSize="context.PageSize" Current="context.PageIndex" OnChange="context.HandlePageChange"
+        <Pagination Class="mt-3 text-end" Total="context.Total" PageSize="context.PageSize" Current="context.PageIndex" OnChange="context.HandlePageChange"
                     PageSizeOptions="_pageSizeOptions" ShowTotal="_showTotal" ShowSizeChanger>
         </Pagination>
     </PaginationTemplate>

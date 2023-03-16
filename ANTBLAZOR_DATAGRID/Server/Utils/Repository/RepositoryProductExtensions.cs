@@ -32,7 +32,9 @@ namespace ANTBLAZOR_DATAGRID.Server.Utils.Repository
                     continue;
 
                 var propertyFromQueryName = param.Split(" ")[0];
-                var objectProperty = propertyInfos.FirstOrDefault(pi => pi.Name.Equals(propertyFromQueryName, StringComparison.InvariantCultureIgnoreCase));
+                var objectProperty = propertyInfos.FirstOrDefault(pi => 
+                    pi.Name.Equals(propertyFromQueryName, StringComparison.InvariantCultureIgnoreCase)
+                );
 
                 if (objectProperty == null)
                     continue;

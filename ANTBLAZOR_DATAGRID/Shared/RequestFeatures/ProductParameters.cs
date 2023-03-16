@@ -16,6 +16,5 @@ namespace ANTBLAZOR_DATAGRID.Shared.RequestFeatures
         public string? SearchTerm { get; set; }
         public string? FilterTerm { get; set; }
         public string? OrderBy { get; set; }
-        public string? OrderDirection { get; set; }
     }
 }
